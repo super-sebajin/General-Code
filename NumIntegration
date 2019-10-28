@@ -1,0 +1,61 @@
+class functionClass:
+    functions = {0: math.sin, 1: math.cos, 2: math.tan, 3: math.exp}
+
+    
+    def __init__(self,option_code=0,x=0):
+        self._option_code = option_code
+        self._x = x
+    @property
+    def code(self):
+        return self._option_code
+    @code.setter
+    def code(self,new_code):
+        self._option_code = new_code
+
+    @property
+    def x(self):
+        return self._x
+    @x.setter
+    def x(self,new_x):
+        self._x = new_x
+    
+
+    
+    def f_x(self):
+        if self.code in self.functions:
+            return self.functions[self.code](self.x)
+
+    def __add__(self,other):
+        sum = self.f_x() + other.f_x()
+        return sum
+    def __mul__(self,other): 
+        product = self.f_x() * other.f_x()
+        return product
+    def __truediv__(self,other):
+        quotient = self.f_x() / other.f_x()
+        return quotient
+class numericalInt:
+    #defaults to math.sin
+    def __init__(self,func=0):
+        self.function = functionClass(func)
+
+
+##(source: https://en.wikipedia.org/wiki/Numerical_integration
+
+##rectangle rule of numerical integration------------------------------------------------------------
+    def rectangle_rule(self, limit_a,limit_b):
+        self.function.x = limit_a
+        return (limit_b - limit_a)*self.function.f_x() 
+
+
+##midpoint rule of numerical integration----------------------------------------------------------------
+
+    def midpoint_rule(self,limit_a,limit_b):
+        self.function.x = (limit_a + limit_b) / 2
+        return (limit_b - limit_a) * self.function.f_x()
+        
+##trapezoidal rule of numerical integration-----------------------------------------------------------------
+    def trapezoidal_rule(self, limit_a, limit_b):
+        self.function.x, x_a, f_a = limit_a, self.function.x, self.function.f_x()
+        self.function.x, x_b, f_b = limit_b, self.function.x, self.function.f_x()
+        return (limit_b - limit_a)*(f_a + f_b)/2
