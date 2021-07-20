@@ -1,3 +1,5 @@
+//This code was written at some point while I was taking my Data Structues and Algorithms class. As I understand, this code pertains to the subject of 
+//the uses of static and dynamic memory. This code has not been excuted since prior to 2020.
 #include<iostream>
 #include<chrono>
 #include<string>
