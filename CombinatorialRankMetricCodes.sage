@@ -1,3 +1,4 @@
+#Author: Sebastian R. Papanikolaou Costa
 #Here is a short list of algorithims written for my undergraduate research project as a participant in the NSF-funded Puerto Rico Louis Stokes Alliance
 #For Minority Participation. This code is actually written in a jupyter notebook, however I am currently using a 2021 Mac Mini with a M1 ARM CPU, SageMath has
 #no support for this chipset as of the dat of creation of this file 2021-07-19. These algorithms have been tested to work in the CoCalc environment.
