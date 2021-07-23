@@ -7,8 +7,7 @@
 #and my time permits me to delve in to this a bit more. I will attempt to 
 #construct the 16 sequences that comprise the (2,4) De Bruijn sequences. 
 #The current approach is to consider a circular doubly linked list to represent
-#a Hamiltonian cycle on a general digraph by using a sorting algorithm. This
-#code, however is just to demonstrate a rough model a digraph vertex and edge.
+#a Hamiltonian cycle on a general digraph by using a sorting algorithm. 
 
 
 #Standard practice is to represent a graph using a dictionary, vertices will
