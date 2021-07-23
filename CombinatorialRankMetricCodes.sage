@@ -53,3 +53,11 @@ def generate_independent_vectors(characteristic, vector_dimension, subspace_dime
             return(test_vectors)
         else:
             test_vectors.clear
+
+#Algorithm-6: function to return the members of a vector space over a finite field, the members are returned as a formatted string for easy copying and pasting to projects outside the SageMath environment.
+def vector_space_members(field, dimension):
+    s = "F{}_elements =\t[\n".format(dimension)
+    for vector in VectorSpace(GF(field), dimension).list():
+        s = s + "\t\t" + str(vector) + ",\n"
+    s = s + "\t\t]"
+    return(s)
