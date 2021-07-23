@@ -1,3 +1,4 @@
+#Author: Sebastian R. Papanikolaou Costa
 #These classes are part of a conitnued research effort on my part. The
 #original purpose comes from research on De Bruijn sequences. The idea is to
 #construct these sequences from De Bruijn Graphs. This was in hopes
@@ -57,3 +58,65 @@ class DirectedEdge:
     #return a tuple holding 
     def get_vertices(self):
         return (self.tail_vertex, self.head_vertex)
+
+        
+#class DeBruijGraph: scratch code (meant for test, final version may or may not
+#implement methods from this class or even used at all). 
+class BinaryDeBruijnGraph:
+    symbols = [0,1]
+    """
+    This class assumes that the symbols inserted are symbols from the binary field.
+    """
+    def __init__(self, key_list=None):
+        self.vertex_list = []
+        self.edge_list = []
+        #key_list is asssumed to be populated, this section we popoulate self.vertex_list
+        if key_list != None:
+            for curr_key in key_list:#iterate through each key in the list
+                curr_vertex = DiGraphVertex(curr_key)#initialize a DiGraphVertex object and name it curr-vertex
+                self.vertex_list.append(curr_vertex)#append curr_vertex to self.vertex_list
+        #Here, we first initialize each edge, connect the two vertices incident to it
+        self._make_edge_list(self.vertex_list)
+    
+    #define a method to initialize a DirectedEdge objects, this
+    #takes the tail and head vertices as arguments. This will be
+    #used in another method.
+    def _connect_vertices(self, vertex_a, vertex_b):
+        #If one of the vertices can be expressed as another vertex by 
+        #shifting all its symbols by one place to the left and adding 
+        #a new symbol at the end of this vertex, then the latter has 
+        #a directed edge to the former vertex. This method use the formal 
+        #definition of a De Bruijn Graph found in its Wikipedia article wikipedia.org/wiki/De_Bruijn_graph
+        import copy#shallow copy two have two test cases arsising from the same vertex
+        curr_vertex = list(vertex_a.key)
+        other_vertex = list(vertex_b.key)
+        other_vertex.pop(0)
+        test_1 = copy.copy(other_vertex)
+        test_2 = copy.copy(other_vertex)
+        test_1.append(self.symbols[1])
+        test_2.append(self.symbols[0])
+        if curr_vertex == test_1:
+            #print("There is an edge from {}--->{}".format(vertex_b.key,
+             #                                         vertex_a.key))
+            self.edge_list.append(DirectedEdge(vertex_b, vertex_a))
+        elif curr_vertex == test_2:
+            #print("There is an edge from {}--->{}".format(vertex_b.key,                                                          
+             #                                             vertex_a.key))
+            self.edge_list.append(DirectedEdge(vertex_b, vertex_a))
+    
+    def _make_edge_list(self, vertices):
+        for current_vertex_index in range(len(vertices)):
+            for other_vertex in vertices:
+                self._connect_vertices(vertices[current_vertex_index], other_vertex)   
+            
+    #dunder methods for pythonic behaviour, it helps for testing. PYTHON!!        
+    def __str__(self):
+        _str = "Current De Bruin Graph:\nVertices: {} in total.\n[\n".format(len(self.vertex_list))
+        for vertex in self.vertex_list:
+            _str = _str + "{},\n".format(vertex.key)
+        _str = _str + "]\n\rEdges:{}\n[\n".format(len(self.edge_list))
+        for edge in self.edge_list:
+            _str = _str + "{},{}\n".format(edge.tail_vertex.key, edge.head_vertex.key)
+        _str = _str + "]"
+        return(_str)
+        

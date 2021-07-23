@@ -1,3 +1,4 @@
+#Author: Sebastian R. Papanikolaou Costa
 #NumericalIntegration.py - Examples of two Python classes that can be further developed to perform numerical integrations found in elementary calculus texts.
 ####The goal of these two classes was to experiment with the OOP features Python offers. Future work will include an update too follow PEP 8. Also, the class
 ####Function will be rewritten to implement two special attributes in its initializer: a 'domain' attribute and a'range' attribute, such that the terminology
