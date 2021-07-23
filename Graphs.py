@@ -87,7 +87,7 @@ class BinaryDeBruijnGraph:
         #a new symbol at the end of this vertex, then the latter has 
         #a directed edge to the former vertex. This method use the formal 
         #definition of a De Bruijn Graph found in its Wikipedia article wikipedia.org/wiki/De_Bruijn_graph
-        import copy#shallow copy two have two test cases arsising from the same vertex
+        import copy#shallow copy two have two test cases arising from the other_vertex
         curr_vertex = list(vertex_a.key)
         other_vertex = list(vertex_b.key)
         other_vertex.pop(0)
@@ -96,12 +96,8 @@ class BinaryDeBruijnGraph:
         test_1.append(self.symbols[1])
         test_2.append(self.symbols[0])
         if curr_vertex == test_1:
-            #print("There is an edge from {}--->{}".format(vertex_b.key,
-             #                                         vertex_a.key))
             self.edge_list.append(DirectedEdge(vertex_b, vertex_a))
         elif curr_vertex == test_2:
-            #print("There is an edge from {}--->{}".format(vertex_b.key,                                                          
-             #                                             vertex_a.key))
             self.edge_list.append(DirectedEdge(vertex_b, vertex_a))
     
     def _make_edge_list(self, vertices):
