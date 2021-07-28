@@ -13,20 +13,11 @@ public class GraphVertex{
     class Vertex{
         String data;
         int degree;
-        ArrayList<GraphEdge.Edge> incidenceList;
+        ArrayList<GraphEdge.Edge> incidenceList = new ArrayList<GraphEdge.Edge>();
 
         public Vertex(String value){
-            this.data = value;
+            this.data = new String(value);
         }
         
-
-        
-
     }
-    public static void main(String[] args){
-        
-    }
-
-
-
 }
