@@ -4,25 +4,18 @@ package GeneralCode.GraphTheoryResearch.Java;
 
 
 public class GraphEdge {
-
-
     //Edge will have the exact same behaivor as a doubly linked list node, with out the data
     class Edge {
-
         GraphVertex.Vertex vertexA;
         GraphVertex.Vertex vertexB;
-
         public Edge(GraphVertex.Vertex vA, GraphVertex.Vertex vB ){
             vertexA = vA;
             vertexB = vB;
             updateIncidenceLists();
-            
-
         }
         private void updateIncidenceLists(){
             vertexA.incidenceList.add(this);
             vertexB.incidenceList.add(this);
-
         }
     } 
     public static void main(String[] args){

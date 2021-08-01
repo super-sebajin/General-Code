@@ -1,0 +1,12 @@
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/bin/Debug/netcoreapp3.1/GeneralizedGraph.deps.json
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/bin/Debug/netcoreapp3.1/GeneralizedGraph.runtimeconfig.json
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/bin/Debug/netcoreapp3.1/GeneralizedGraph.runtimeconfig.dev.json
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/bin/Debug/netcoreapp3.1/GeneralizedGraph.dll
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/bin/Debug/netcoreapp3.1/GeneralizedGraph.pdb
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/obj/Debug/netcoreapp3.1/GeneralizedGraph.csproj.AssemblyReference.cache
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/obj/Debug/netcoreapp3.1/GeneralizedGraph.AssemblyInfoInputs.cache
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/obj/Debug/netcoreapp3.1/GeneralizedGraph.AssemblyInfo.cs
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/obj/Debug/netcoreapp3.1/GeneralizedGraph.csproj.CoreCompileInputs.cache
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/obj/Debug/netcoreapp3.1/GeneralizedGraph.dll
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/obj/Debug/netcoreapp3.1/GeneralizedGraph.pdb
+/Users/base/Projects/GeneralizedGraph/GeneralizedGraph/obj/Debug/netcoreapp3.1/GeneralizedGraph.genruntimeconfig.cache

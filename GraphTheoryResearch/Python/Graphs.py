@@ -1,117 +1,113 @@
 #Author: Sebastian R. Papanikolaou Costa
-#These classes are part of a conitnued research effort on my part. The
-#original purpose comes from research on De Bruijn sequences. The idea is to
-#construct these sequences from De Bruijn Graphs. This was in hopes
-#to create matrices (square) whose entries are symbols of a De Bruijn sequence.
-#However it proved to be a bit more difficul than expected. I have since then g
-#and my time permits me to delve in to this a bit more. I will attempt to 
-#construct the 16 sequences that comprise the (2,4) De Bruijn sequences. 
-#The current approach is to consider a circular doubly linked list to represent
-#a Hamiltonian cycle on a general digraph by using a sorting algorithm. 
+#Here will be housed a set of classes that will be used to model an arbitrary 
+#Unidrected Graph. The purpose of these classes will be to use proper OOP concepts
+#for modeling these mathematical objects.
 
+#A graph G(V,E) is the set G(V,E) = {V, E}, where V = {v1...,vn} and
+#E = {{v1,v2},...{vn,v(n+1)}}. Therefore, this module will be comprised of the
+#following classes:
+#  GraphVertex:
+#     deg: Integer
+#     _incidence_list: [GraphEdge]
+#     data: Object
+#     
+#
+#  GraphEdge: (with respect to common data structures, GraphEdge is designed to act as a node from a doubly linked list or it circular variant)
+#     vertex_left: GraphVertex
+#     vertex_right: GraphVertex
+#     _update_incidence_lists(): Void
 
-#Standard practice is to represent a graph using a dictionary, vertices will
-#actually act as list and tree nodes (linked lists, doubly linked lists).
-#We know that nodes have a tails and a heads that point to the other
-#nodes in the tree or list.
+#class GraphVertex: class model of a general graph vertex.
+class GraphVertex:
+    #area for class attributes
 
-class DiGraphVertex:
-    """
-    Keyword Arguments: key <- the actual value stored in the vertex
+    #Constructor
+    def __init__(self, data=None):
+        self._degree = 0 #Any graph construction starts with their vertices at deg(vn)=0
+        self._incidence_list = list()
+        self._data = data
+  
+    #property decorator for get/set operations for self._data
+    @property
+    def data(self):
+        return(self._data)
+
+    @data.setter
+    def data(self,new_data):
+        self._data = new_data
+
+     #property decorator for get/set operation for self._incidence_list
+    @property
+    def incidence_list(self):
+        return(self.incidence_list)
     
-    Attributes:
-        - key:Object <- value stored in the vertex, termed key for traversals
-        - in_deg:Integer <- Number of incoming edges
-        - out_deg:Integer <- Number of outgoing edges
-        - in_list:set:DirectedEdge <- Set of all incoming DirectedEdge objects
-        - out_list:set:DirectedEdge <- Set of all outgoing DirectedEdge object
-    """
-    def __init__(self, key=None):
-        self.key = key 
-        self.in_deg = 0
-        self.out_deg = 0
-        self.incidence_list = list()
-        
+    #property decorator for self._degree for get operations, the setter for this function
+    @property #will be defined in this class' subclasses
+    def degree(self):
+        return(self._degree)
+    @degree.setter
+    def degree(self, new_degree):
+        self._degree = new_degree
 
-class DirectedEdge:
-    """
-    Directed edge will be used in DiGraphVertex, and will
-    simply contain two references to two distinct vertices
-    """
-    def __init__(self, tail_vertex=None, head_vertex=None):
-        #assign the tail and head of this edge
-        self.tail_vertex = tail_vertex
-        self.head_vertex = head_vertex
-        self.update_vertices()
-        
-    #update the degree counts of each connected vertex
-    def update_vertices(self):
-        #update the in/out degrees of the vertices the edge connects
-        self.tail_vertex.out_deg = self.tail_vertex.out_deg + 1
-        self.head_vertex.in_deg = self.head_vertex.in_deg + 1
-        #update each vertex so that it is 'aware' of the edge
-        self.tail_vertex.incidence_list.append(self)
-        self.head_vertex.incidence_list.append(self)
-        
-        
-    #return a tuple holding 
-    def get_vertices(self):
-        return (self.tail_vertex, self.head_vertex)
+#class GraphEdge: class model of a general graph edge
+class GraphEdge:
+    #are for class attributes
 
-        
-#class DeBruijGraph: scratch code (meant for test, final version may or may not
-#implement methods from this class or even used at all). 
-class BinaryDeBruijnGraph:
-    symbols = [0,1]
-    """
-    This class assumes that the symbols inserted are symbols from the binary field.
-    """
-    def __init__(self, key_list=None):
-        self.vertex_list = []
-        self.edge_list = []
-        #key_list is asssumed to be populated, this section we popoulate self.vertex_list
-        if key_list != None:
-            for curr_key in key_list:#iterate through each key in the list
-                curr_vertex = DiGraphVertex(curr_key)#initialize a DiGraphVertex object and name it curr-vertex
-                self.vertex_list.append(curr_vertex)#append curr_vertex to self.vertex_list
-        #Here, we first initialize each edge, connect the two vertices incident to it
-        self._make_edge_list(self.vertex_list)
+    def __init__(self, vertex_a= None, vertex_b= None):
+        self._vertex_a = vertex_a
+        self._vertex_b = vertex_b
+        self._connect_vertices()
     
-    #define a method to initialize a DirectedEdge objects, this
-    #takes the tail and head vertices as arguments. This will be
-    #used in another method.
-    def _connect_vertices(self, vertex_a, vertex_b):
-        #If one of the vertices can be expressed as another vertex by 
-        #shifting all its symbols by one place to the left and adding 
-        #a new symbol at the end of this vertex, then the latter has 
-        #a directed edge to the former vertex. This method use the formal 
-        #definition of a De Bruijn Graph found in its Wikipedia article wikipedia.org/wiki/De_Bruijn_graph
-        import copy#shallow copy two have two test cases arising from the other_vertex
-        curr_vertex = list(vertex_a.key)
-        other_vertex = list(vertex_b.key)
-        other_vertex.pop(0)
-        test_1 = copy.copy(other_vertex)
-        test_2 = copy.copy(other_vertex)
-        test_1.append(self.symbols[1])
-        test_2.append(self.symbols[0])
-        if curr_vertex == test_1:
-            self.edge_list.append(DirectedEdge(vertex_b, vertex_a))
-        elif curr_vertex == test_2:
-            self.edge_list.append(DirectedEdge(vertex_b, vertex_a))
-    
-    def _make_edge_list(self, vertices):
-        for current_vertex_index in range(len(vertices)):
-            for other_vertex in vertices:
-                self._connect_vertices(vertices[current_vertex_index], other_vertex)   
-            
-    #dunder methods for pythonic behaviour, it helps for testing. PYTHON!!        
-    def __str__(self):
-        _str = "Current De Bruin Graph:\nVertices: {} in total.\n[\n".format(len(self.vertex_list))
-        for vertex in self.vertex_list:
-            _str = _str + "{},\n".format(vertex.key)
-        _str = _str + "]\n\rEdges:{}\n[\n".format(len(self.edge_list))
-        for edge in self.edge_list:
-            _str = _str + "{},{}\n".format(edge.tail_vertex.key, edge.head_vertex.key)
-        _str = _str + "]"
-        return(_str)
-        
+    #code that "updates" the GraphVertex objects about the edge and the connection
+    def _update_incidence_list(self):
+        self._vertex_a.incidence_list.append(self)
+        self._vertex_b.incidence_list.append(self)
+    def _update_vertex_degrees(self):
+        self._vertex_a.degree += 1
+        self._vertex_b.degree += 1
+    def _connect_vertices(self):
+        self._update_incidence_list()
+
+#This class will be implemented as an Abstract Base Class. Work will be done with the 'TestGraphObject' first and later implemented to different classes. The operations of a graph have to be defined, 'TestGraphObject' serves this purpose.
+from abc import ABC, abstractmethod
+class GeneralGraphs(ABC):
+    #A graph, mathematically is just a set that contains set of vertices and edges.
+    #In this class we will choose that simple definition in order to no clutter this
+    #abstract base class. The purpose of this class is to provide a blueprint for
+    #its subclasses.
+    def __init__(self):
+        #_vertices is a set() of vertex labels of type String
+        self._vertices = set()
+        #_edges is a set() of ordered pairs of edges, s set() of list(String,String)
+        self._edges = set()
+        super().__init__()
+
+    @abstractmethod
+    def _connect_graph(self):
+        pass
+    #@abstractmethod
+    #def _addVertex(self):
+        #pass
+
+
+#The first subclass that will be constructed is the 'Simple'
+class TestGraph(GeneralGraphs):
+    def __init__(self, n_vertices=None):#pick up here
+        super().__init__()
+
+    def _connect_graph(self, vertex_List= None):
+        pass
+    #method for 1 vertex initialization
+    def _initialize_vertices(self):
+        pass
+    #method 1 override for initializing n vertices at once
+    def _initialize_vertices(self, n):
+        pass
+
+
+
+
+
+test_graph_object = TestGraph(vertex_list = ['1','1','1','1'])
+
+print(test_graph_object.parent_dictionary.keys())
